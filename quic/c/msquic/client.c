@@ -30,7 +30,7 @@ uint64_t TotalBytesSent = 0;
 struct timespec StartTime, EndTime;
 
 // Send window control
-#define MAX_PENDING_SENDS (16*1024)
+#define MAX_PENDING_SENDS (128*1024)
 volatile int PendingSends = 0;
 
 // Signal handler function
@@ -274,8 +274,12 @@ int main(int argc, char *argv[]) {
 
     // Main loop - continue sending data until test time expires
     while (Running && !TestTimeExpired) {
-        if (Stream != NULL && PendingSends < MAX_PENDING_SENDS) {
-            SendData(Stream);
+        if (Stream != NULL) {
+            if (PendingSends < MAX_PENDING_SENDS) {
+                SendData(Stream);
+            } else {
+                usleep(100); //XXX: improve this
+            }
         }
     }
 

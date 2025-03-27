@@ -1,3 +1,5 @@
+# MsQuic 简单测试程序 Makefile
+
 CC = gcc
 CFLAGS = -Wall -Werror -g -I/home/hliu/Source/quic-testing/ms-quic/msquic/src/inc
 LDFLAGS = -lmsquic -lnuma -L/home/hliu/Source/quic-testing/ms-quic/msquic/build-static/bin/Release/
